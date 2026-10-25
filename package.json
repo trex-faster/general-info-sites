@@ -1,0 +1,36 @@
+{
+  "name": "scrape-lens",
+  "description": "Extensión genérica de scraping: captura fetch/XHR/GraphQL/REST/XML/WebSocket de cualquier sitio y lo convierte en tablas exportables",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox --mv3",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox --mv3",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox --mv3",
+    "compile": "tsc --noEmit",
+    "test": "vitest run",
+    "postinstall": "wxt prepare"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@wxt-dev/module-react": "^1.2.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5",
+    "wxt": "^0.21.4"
+  }
+}

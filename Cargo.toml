@@ -1,0 +1,4 @@
+# Workspace opcional para el motor en Rust (WASM). Aún sin compilar: ver docs/ARCHITECTURE.md
+[workspace]
+members = ["crates/engine-core"]
+resolver = "2"

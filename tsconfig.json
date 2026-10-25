@@ -1,0 +1,11 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["vitest/globals", "node"]
+  },
+  "include": ["src", "tests", "wxt.config.ts", "vitest.config.ts", ".wxt/wxt.d.ts"]
+}
