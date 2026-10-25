@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { BgRequest, TabRequest } from '@/core/types';
+import type { StructuredRequest } from '@/features/structured/messages';
 
 export const bg = <T,>(m: BgRequest) => browser.runtime.sendMessage(m) as Promise<T>;
-export const tabMsg = <T,>(tabId: number, m: TabRequest) => browser.tabs.sendMessage(tabId, m) as Promise<T>;
+export const tabMsg = <T,>(tabId: number, m: TabRequest | StructuredRequest) => browser.tabs.sendMessage(tabId, m) as Promise<T>;
 
 export function useActiveTab(): { tabId: number | null; url: string } {
   const [s, set] = useState<{ tabId: number | null; url: string }>({ tabId: null, url: '' });

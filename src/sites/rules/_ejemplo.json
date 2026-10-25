@@ -1,0 +1,27 @@
+{
+  "id": "tienda-ejemplo",
+  "name": "Tienda de ejemplo",
+  "status": "experimental",
+  "note": "Copia este archivo, quita el guion bajo del nombre y cambia host y selectores.",
+  "match": { "host": ["tienda-ejemplo.com"], "path": "^/(categoria|buscar)/" },
+  "prefer": ["rule", "jsonld"],
+  "disable": ["heuristics"],
+  "list": {
+    "rowSelector": ".product-card",
+    "columns": [
+      { "name": "titulo", "selector": ".product-card__title" },
+      { "name": "precio", "selector": ".price" },
+      { "name": "enlace", "selector": "a", "attr": "href" },
+      { "name": "imagen", "selector": "img", "attr": "src" }
+    ]
+  },
+  "entity": {
+    "type": "Product",
+    "fields": {
+      "name": { "css": "h1", "jsonld": "name" },
+      "price": { "css": ".price", "jsonld": "offers.price", "transform": "number" },
+      "sku": { "jsonld": "sku", "css": "[data-sku]", "attr": "data-sku" },
+      "images": { "css": ".gallery img", "attr": "src", "all": true, "transform": "url" }
+    }
+  }
+}

@@ -5,9 +5,10 @@ import { deleteRecipe, getRecipes } from '@/features/recipes/store';
 import { toCurl } from '@/features/replay/replay';
 import { Tree } from './Tree';
 import { Extractor } from './Extractor';
+import { Page } from './Page';
 import { bg, hostOf, short, tabMsg, useActiveTab } from './util';
 
-type View = 'list' | 'detail' | 'extract' | 'recipes';
+type View = 'list' | 'detail' | 'extract' | 'recipes' | 'page';
 
 export function App() {
   const { tabId, url } = useActiveTab();
@@ -63,6 +64,7 @@ export function App() {
         <button className={view === 'list' ? 'act' : ''} onClick={() => setView('list')}>Capturas ({items.length})</button>
         <button disabled={!cap} className={view === 'detail' ? 'act' : ''} onClick={() => setView('detail')}>Detalle</button>
         <button disabled={!cap} className={view === 'extract' ? 'act' : ''} onClick={() => setView('extract')}>Extraer</button>
+        <button className={view === 'page' ? 'act' : ''} onClick={() => setView('page')}>Página</button>
         <button className={view === 'recipes' ? 'act' : ''} onClick={() => setView('recipes')}>Recetas{mine.length ? ` (${mine.length})` : ''}</button>
       </nav>
       {note && <div className="msg">{note}</div>}
@@ -117,6 +119,8 @@ export function App() {
       )}
 
       {view === 'extract' && cap && tabId != null && <section><Extractor cap={cap} tabId={tabId} presetPath={preset} recipe={recipe} /></section>}
+
+      {view === 'page' && <section><Page tabId={tabId} url={url} /></section>}
 
       {view === 'recipes' && (
         <section>

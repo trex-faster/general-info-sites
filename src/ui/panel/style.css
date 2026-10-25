@@ -33,3 +33,6 @@ ul.caps li:hover { border-color:var(--acc); }
 .tablewrap { overflow:auto; max-height:50vh; border:1px solid var(--line); border-radius:6px; }
 table { border-collapse:collapse; font-size:12px; } th, td { border-bottom:1px solid var(--line); padding:3px 7px; max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left; }
 th { position:sticky; top:0; background:var(--panel); }
+.chips button { font-size:12px; }
+.blk { margin:10px 0; }
+code { background:var(--panel); padding:0 4px; border-radius:4px; }

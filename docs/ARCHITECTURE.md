@@ -16,6 +16,10 @@ crates/  native/  public/wasm/   Rust/Go: fuera de src, no afectan al build mien
 entrypoints → ui, features → engines, sites → core. `core` no importa de nadie. `engines` sólo de `core`.
 Lo que necesite DOM o APIs del navegador **no** va en `engines` (por eso `features/extract/dom.ts` y `xml.ts` están fuera).
 
+## Datos estructurados (`features/structured/`)
+Cada método de la cascada es un archivo pequeño que devuelve `Entity[]` o `ListResult[]`: `jsonld`, `microdata`, `opengraph`, `repeats` (DOM repetido y tablas), `heuristics`, `embedded` (APIs ya capturadas), `ai` (proveedor inyectado), `feeds` (robots/sitemap/RSS). `analyze.ts` los orquesta (`analyzeDom` en el content script, `cascade` en el panel). Los métodos que usan DOM reciben un `Document`, por eso se prueban con `linkedom` sin navegador.
+**Regla de crecimiento:** un sitio nuevo = un JSON en `sites/rules/` o una regla del usuario (`SiteRule`, ver `types.ts`). Solo si una regla no alcanza se escribe un adaptador `.ts`. Añadir un método nuevo = un archivo + una línea en `analyze.ts` y en `DEFAULT_ORDER` (`rules.ts`).
+
 ## Cómo crecer sin tocar carpetas
 - **Nuevo sitio:** copia `sites/_template` a `sites/<sitio>/`. Cero ediciones en otros archivos.
 - **Nueva capacidad:** carpeta nueva en `features/` + una pestaña en `ui/panel`.

@@ -21,6 +21,17 @@ pnpm zip              # paquete .zip
 5. **Paginar con replay:** repite la petición capturada *desde la página* (con tus cookies) cambiando un parámetro de URL, un campo del body JSON (`variables.page`) o siguiendo un cursor (`data.pageInfo.endCursor`). Con pausa configurable y límite de páginas.
 6. **Recetas:** guarda ruta + columnas por sitio y vuélvelas a aplicar.
 
+## Pestaña «Página»: datos estructurados de cualquier sitio
+**Analizar página** prueba varios métodos en cascada (del más fiable al menos) y se queda con el primero que devuelve datos; los demás quedan visibles como botones para comparar:
+
+1. **Regla del sitio** (JSON, ver abajo) → 2. **JSON-LD** (schema.org: Product, Article…) → 3. **Microdata / RDFa** → 4. **OpenGraph** → 5. **APIs internas** ya capturadas → 6. **Patrones repetidos del DOM** (tarjetas, listas, tablas) → 7. **Heurísticas** (artículo, precio) → 8. **IA** (manual, último recurso).
+
+Tipos de contexto (Organization, BreadcrumbList, contacto…) se muestran con «incluir contexto» pero no detienen la cascada. **Mapear sitio** lee `robots.txt` y los sitemaps (con índices) y exporta las URLs; los feeds RSS/Atom se descargan en CSV.
+
+**Un sitio nuevo no es un archivo `.ts`.** Es una regla JSON (selectores y rutas): «Guardar como regla» convierte una lista detectada en regla del sitio; también se importan/exportan desde «Reglas», o se dejan como archivos en `src/sites/rules/*.json` (ver su README). Cada regla lleva un estado `experimental | stable | unsupported`: `unsupported` marca un sitio que no se soporta y el panel lo explica en vez de fallar. El código por sitio (`sites/<id>/index.ts`) queda solo para lo que una regla no pueda expresar.
+
+**IA:** envía el HTML limpio al proveedor que configures (API tipo `/chat/completions`) y valida el resultado contra tu esquema. La clave queda en el navegador; el contenido de la página sale hacia ese proveedor.
+
 ## Sintaxis de rutas
 `a.b`, `a[0]`, `a[*]`, `a["clave rara"]`, `$.a.b`. Sobre un array, `items.id` mapea implícitamente.
 

@@ -1,5 +1,8 @@
 import { MAX_BODY, SENSITIVE_HEADERS, type Kind, type TabRequest } from '@/core/types';
 import { extractDom } from '@/features/extract/dom';
+import { analyzeDom } from '@/features/structured/analyze';
+import { cleanHtml } from '@/features/structured/ai';
+import type { StructuredRequest } from '@/features/structured/messages';
 
 const EV = '__scrape_lens__';
 const CMD = '__scrape_lens_cmd__';
@@ -36,8 +39,18 @@ export function installBridge(): void {
       } catch { /* ignorar */ }
     });
 
-    browser.runtime.onMessage.addListener((msg: TabRequest, _s, sendResponse) => {
+    browser.runtime.onMessage.addListener((msg: TabRequest | StructuredRequest, _s, sendResponse) => {
       if (!msg || typeof msg !== 'object') return false;
+      if (msg.type === 'analyze') {
+        try { sendResponse({ ok: true, analysis: analyzeDom(document, location.href, Array.isArray(msg.rules) ? msg.rules : []) }); }
+        catch (err) { sendResponse({ ok: false, error: String(err) }); }
+        return false;
+      }
+      if (msg.type === 'clean-html') {
+        try { sendResponse({ ok: true, html: cleanHtml(document) }); }
+        catch (err) { sendResponse({ ok: false, error: String(err) }); }
+        return false;
+      }
       if (msg.type === 'scan') {
         window.dispatchEvent(new CustomEvent(CMD, { detail: 'scan' }));
         sendResponse({ ok: true });
